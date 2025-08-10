@@ -96,7 +96,25 @@ void print7(int n)
     {
         for (int j = 0; j < (2 * n - 1); j++)
         {
-            if (j < (n - i - 1) || j > (n+i-1))
+            if (j < (n - i - 1) || j > (n + i - 1))
+            {
+                cout << " ";
+            }
+            else
+            {
+                cout << "*";
+            }
+        }
+        cout << endl;
+    }
+}
+void print8(int n)
+{
+    for (int i = n - 1; i >= 0; i--)
+    {
+        for (int j = 0; j < (2 * n - 1); j++)
+        {
+            if (j < (n - i - 1) || j > (n + i - 1))
             {
                 cout << " ";
             }
@@ -109,6 +127,38 @@ void print7(int n)
     }
 }
 
+void print9(int n)
+{
+    for (int i = 0; i <= 2 * n - 1; i++)
+    {
+        int stars = i;
+        if (i > n)
+        {
+            stars = 2 * n - i;
+        }
+        for (int j = 0; j < stars; j++)
+        {
+            cout << "*";
+        }
+
+        cout << endl;
+    }
+}
+
+void print10(int n){
+    int start;
+    for (int i = 0; i < n; i ++ ){
+        (i % 2 == 0) ? start = 1 : start = 0;
+
+        for (int j = 0; j <= i; j++){
+            cout << start;
+            start = 1 - start;
+        }
+        cout << endl;
+        
+    }
+}
+
 int main()
 {
     int n;
@@ -116,5 +166,9 @@ int main()
     cin >> n;
     // print1(n);
     // print2(n);
-    print7(n);
+    // print7(n);
+    // print8(n);
+    print10(n);
 }
+
+
