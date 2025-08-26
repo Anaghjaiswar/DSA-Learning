@@ -12,20 +12,20 @@ void rearrangeArrayElementsWithOddNoOfElements(vector<int>& nums){
     }
 
     if( negArray.size() > posArray.size()){
-        for(int i = 0; i < posArray.size(); i++){
+        for(size_t i = 0; i < posArray.size(); i++){
             nums[2*i] = posArray[i];
             nums[(2*i)+1]=negArray[i];
         }
-        for(int i = 2*posArray.size(); i < n; i++){
+        for(size_t i = 2*posArray.size(); i < static_cast<size_t>(n); i++){
             nums[i] = negArray[i-posArray.size()];
         }
     }
-    if( posArray.size() > negArray.size()){
-        for(int i = 0; i < negArray.size(); i++){
+    else{
+        for(size_t i = 0; i < negArray.size(); i++){
             nums[2*i] = posArray[i];
             nums[(2*i)+1]=negArray[i];
         }
-        for(int i = 2*negArray.size(); i < n; i++){
+        for(size_t i = 2*negArray.size(); i < static_cast<size_t>(n); i++){
             nums[i] = posArray[i-negArray.size()];
         }
     }
