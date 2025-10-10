@@ -37,6 +37,12 @@ double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
 
 }
 
+// agar final total array me ke size agar even hai toh n/2 aur n/2-1 index cahhiye unka avg return karna hai ,
+//  nahi toh agar odd hai toh n/2 return karna hai
+// let's figure these two code 
+
+
+
 int main(){
     vector<int> nums1 = {1,3};
     vector<int> nums2 = {2};
