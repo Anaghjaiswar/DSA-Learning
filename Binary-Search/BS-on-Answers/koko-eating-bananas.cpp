@@ -15,8 +15,9 @@ void timecalculate(int pile, int k, int &totalTime){
 
 int minEatingBananas(vector<int>& piles, int h) {
     int p = piles.size();
+    int maxElement = *max_element(piles.begin(), piles.end());
     
-    for (int k = 1; k <= *max_element(piles.begin(), piles.end()); k++)
+    for (int k = 1; k <= maxElement; k++)
     {
         int totalTime = 0;
 
