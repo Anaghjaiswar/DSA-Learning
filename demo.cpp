@@ -39,7 +39,7 @@ int equalizeArray(vector<int> arr)
 int main()
 {
     cout << "Hello, world!" << endl;
-    vector <int> v1 = {}
-    equalizeArray()
+    vector <int> v1 = {};
+    cout << equalizeArray(v1);
     return 0;
 }
