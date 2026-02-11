@@ -35,3 +35,26 @@ private:
         preorder(node->right, ans);
     }
 };
+
+
+vector<int> iterativePreorderTraversal(TreeNode* root){
+
+    vector<int> ans;
+    if (root == NULL) return ans;
+
+    stack<TreeNode*> st;
+    st.push(root);
+
+    while(!st.empty()){
+        // extract the node
+        TreeNode* node = st.top();
+        st.pop();
+
+        // process the node , we first process right then left bcz of stask LIFO approch it will correctly iterate
+        ans.push_back(node -> val);
+        if(node -> right != NULL) st.push(node -> right);
+        if(node -> left != NULL) st.push(node -> left);
+    }
+    return ans;
+
+}

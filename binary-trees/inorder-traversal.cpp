@@ -34,3 +34,35 @@ private:
     }
 
 };
+
+
+vector<int> iterativeInorderTraversal(TreeNode* node){
+    // 1. maintain a stack
+    stack<TreeNode* > st;
+    vector<int> ans;
+
+    // go to the extreme left possible then node then right
+    while(true){
+        if(node != NULL){
+            st.push(node);
+            node = node -> left;
+        }
+
+        // left node is null
+        else{
+            // if there are no eleents break
+            if(st.empty()) break;
+
+            // proces the node  and push it 
+            node = st.top();
+            st.pop();
+            ans.push_back(node -> val);
+
+            // now check the right
+            node = node -> right;
+
+
+        }
+    }
+    return ans;
+}
