@@ -1,0 +1,49 @@
+
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// Definition for a binary tree node.
+struct TreeNode {
+   int val;
+   TreeNode *left;
+   TreeNode *right;
+
+    //constructor call
+   TreeNode() : val(0), left(nullptr), right(nullptr) {}
+   TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+   TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+};
+
+
+
+vector<int> morrisPreorderTraversal(TreeNode* root){
+    vector<int> preorder;
+
+    TreeNode* curr = root;
+
+    while(curr != NULL){
+        if(curr -> left == NULL){
+            preorder.push_back(curr -> val);
+            curr = curr -> right;
+        }
+        else{
+            TreeNode* prev = curr -> left;
+            while(prev -> right && prev -> right != NULL){
+                prev = prev -> right;
+            }
+            if(prev -> right == NULL){
+                prev -> right = curr;
+                preorder.push_back(curr -> val);
+                curr = curr -> left;
+            }
+            else{
+                prev -> right = NULL;
+                curr = curr -> right;
+            }
+        }
+    }
+    return preorder;
+
+}

@@ -77,3 +77,82 @@ bool isTargetMatched(TreeNode* root, TreeNode* target){
 };
 
  
+
+
+// another approach -- tree graph approach 
+// construct parent pointers
+
+vector<int> allNodeAtaDistanceK(TreeNode* root, TreeNode* target, int k){
+    vector<int> ans;
+    if(!root) return ans;
+    
+
+    // MARK PARENTS-------------------------------------------------------------------------------------
+    unordered_map<TreeNode*, TreeNode*> parent_track;
+    queue<TreeNode*> qu;
+    qu.push(root);
+    while(!qu.empty()){
+        int size = qu.size();
+        for(int i = 0;i< size; i++){
+            TreeNode* temp = qu.front();
+            qu.pop();
+
+            if(temp -> left){
+                qu.push(temp -> left);
+                parent_track[temp-> left] = temp;
+            }
+
+            if(temp -> right){
+                qu.push(temp-> right);
+                parent_track[temp->right] = temp;
+            }
+        }
+    }
+    // # ========================================================================================
+    unordered_map<TreeNode* , bool> visited;
+
+    // since our previous queue is empty now we can reuse it again
+    
+
+    // we need to go radially upwards and downwards from the target node
+    qu.push(target);
+    visited[target] = true;
+
+    int curr_level = 0; // when this is k we will just print all the elements in the queue
+
+    while(!qu.empty()){
+        int size = qu.size();
+
+        if(curr_level == k) break;
+
+        for(int i = 0 ; i< size; i++){
+            TreeNode* temp = qu.front();
+            qu.pop();
+
+            if(temp -> left && !visited[temp-> left]){
+                qu.push(temp-> left);
+                visited[temp -> left] = true;
+            }
+            if(temp -> right && !visited[temp-> right]){
+                qu.push(temp-> right);
+                visited[temp -> right] = true;
+            }
+
+            if (parent_track[temp] && !visited[parent_track[temp]]){
+                qu.push(parent_track[temp]);
+                visited[parent_track[temp]] = true;
+            }
+            
+        }
+        curr_level++;
+    }
+
+    while(!qu.empty()){
+        ans.push_back(qu.front()-> val);
+
+        qu.pop();
+
+    }
+    return ans;
+
+}
