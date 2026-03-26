@@ -16,67 +16,58 @@ struct TreeNode {
 
 
 
-// brute
-class Solution {
-public:
-    bool findTarget(TreeNode* root, int k) {
-        // make the tree in inorder , as it would we already sorted in ascending order
-        vector<int> path;
-        inorder(root,path);
+// // brute
+// class Solution {
+// public:
+//     bool findTarget(TreeNode* root, int k) {
+//         // make the tree in inorder , as it would we already sorted in ascending order
+//         vector<int> path;
+//         inorder(root,path);
 
-        // now perform standard 2 sum
-        int left = 0;
-        int right = path.size() - 1;
-        while(left < right){
-            int sum = path[left] + path[right];
-            if (sum == k) return true;
-            else if(sum < k) left++;
-            else right--;
-
-
-        }
-        return false;
-
-    }
-private:
-    void inorder(TreeNode* root, vector<int>& path){
-        if(root == nullptr) return;
-        inorder(root -> left,path);
-        path.push_back(root -> val);
-        inorder(root -> right, path);
-    }
-};
+//         // now perform standard 2 sum
+//         int left = 0;
+//         int right = path.size() - 1;
+//         while(left < right){
+//             int sum = path[left] + path[right];
+//             if (sum == k) return true;
+//             else if(sum < k) left++;
+//             else right--;
 
 
+//         }
+//         return false;
 
-void inorder1(TreeNode* root, stack<int>& st1){
-    if(root == NULL) return;
-    inorder1(root -> left, st1);
-    st1.push(root -> val);
-    inorder1(root -> right, st1);
+//     }
+// private:
+//     void inorder(TreeNode* root, vector<int>& path){
+//         if(root == nullptr) return;
+//         inorder(root -> left,path);
+//         path.push_back(root -> val);
+//         inorder(root -> right, path);
+//     }
+// };
+
+
+bool findTarget(TreeNode* root , int k){
+    unordered_map <int, TreeNode*> mpp;
+    bool ans = false;
+    inorder(root, mpp, k, ans);
+    return ans;
+
 }
 
-void inorder2(TreeNode* root, stack<int>& st2){
-    if(root == NULL) return;
-    inorder1(root -> right, st2);
-    st2.push(root -> val);
-    inorder1(root -> left, st2);
-}
+void inorder(TreeNode* root, unordered_map<int, TreeNode*>& mpp, int target, bool& answer){
+    if (root == NULL) return;
 
+    inorder(root -> left, mpp, target, answer);
 
-// better
-bool findTarget(TreeNode* root, int k){
-    stack<int> st1;   // standard inorder
-    stack<int> st2;   // reverse inorder
+    // optimization
+    if(answer) return;
 
-    inorder1(root, st1);
-    inorder2(root, st2);
-
-    while(!st1.empty()){
-        if (st1.top() + st2.top() == k) return true;
-        st1.pop();
-        st2.pop();
+    if(mpp.find(root -> val) != mpp.end()){
+        answer = true;
     }
-    return false;
+    mpp[target - (root -> val)] = root;
+    inorder(root -> right, mpp, target, answer);
 
 }
