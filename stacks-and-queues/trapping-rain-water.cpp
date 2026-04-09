@@ -41,41 +41,58 @@
 using namespace std;
 
 
-class Solution {
-public:
-    int trap(vector<int>& height) {
-        int n = height.size();
-        vector<int> nxtGre = nextGreatest(height);
-        vector<int> preGre = previousGreatest(height);
+vector<int> nextGreatest(vector<int>& arr){
+    int n = arr.size();
+    vector<int> ng(n);
 
-        int waterSum = 0;
-        for(int i = 0; i < n; i++){
-            int water= min(nxtGre[i],preGre[i]) - height[i]; 
-            if (water > 0) waterSum+=water;
-        }
-        return waterSum;
-
-
+    ng[n-1] = arr[n-1];
+    for(int i = n-2; i >= 0; i--){
+        ng[i] = max(arr[i], ng[i+1]);
     }
-private:
-    vector<int> nextGreatest(vector<int>& arr){
-        int n = arr.size();
-        vector<int> ng(n);
+    return ng;
+}
+vector<int> previousGreatest(vector<int>& arr){
+    int n = arr.size();
+    vector<int> pg(n);
 
-        ng[n-1] = arr[n-1];
-        for(int i = n-2; i >= 0; i--){
-            ng[i] = max(arr[i], ng[i+1]);
-        }
-        return ng;
+    pg[0] = arr[0];
+    for(int i = 1; i < n; i++){
+        pg[i] = max(arr[i], pg[i-1]);
     }
-    vector<int> previousGreatest(vector<int>& arr){
-        int n = arr.size();
-        vector<int> pg(n);
+    return pg;
+}
 
-        pg[0] = arr[0];
-        for(int i = 1; i < n; i++){
-            pg[i] = max(arr[i], pg[i-1]);
-        }
-        return pg;
+int trap(vector<int>& height) {
+    int n = height.size();
+    vector<int> nxtGre = nextGreatest(height);
+    vector<int> preGre = previousGreatest(height);
+
+    int waterSum = 0;
+    for(int i = 0; i < n; i++){
+        int water= min(nxtGre[i],preGre[i]) - height[i]; 
+        if (water > 0) waterSum+=water;
     }
-};
+    return waterSum;
+
+
+}
+
+
+
+int main(){
+    vector<int> arr = {1,8,6,2,5,4,8,3,7};
+    vector<int> ng = nextGreatest(arr);
+    vector<int> pg = previousGreatest(arr);
+
+    for(int i = 0 ; i < ng.size();i++){
+        cout<<ng[i]<<" ";
+    
+    }
+    cout<<endl;
+    for (int i = 0; i < pg.size(); i++)
+    {
+        cout<<pg[i]<<" ";
+    
+    }
+    return 0;
+}
